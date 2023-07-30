@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML-CSS-JS Fundamentals</title>
+  <style>
+     h1 {
+      color: #000000;
+    }
+     body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #cdcbcb;
+    }
+
+    .quiz-container {
+      max-width: 1500px;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      height: 700px;
+      overflow-y: auto;
+    }
+
+    .question {
+      border: 1px solid #d3d2d2;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .options {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .options label {
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin-bottom: 5px;
+      word-wrap: break-word;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #quiz {
+      margin-top: 20px;
+    }
+
+    button {
+      display: block;
+      margin: 50px auto;
+      padding: 20px 10px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>HTML-CSS-JS Fundamentals</h1>
+    <div id="quiz"></div>
+    <button id="submit-btn">Submit Answers</button>
+  </div>
+  <script>
+    const quizContainer = document.getElementById('quiz');
+    const submitButton = document.getElementById('submit-btn');
+
+    const questions = [
+      {
+        question: '1.What does HTML stand for?',
+        options: ['Hyper Text Markup Language', 'Hyperlinks and Text Markup Language', 'Home Tool Markup Language'],
+        answer: 'Hyper Text Markup Language'
+      },
+      {
+        question: '2.Which of the following is NOT a CSS selector?',
+        options: ['#id-selector', '.class-selector', '*asterisk-selector', '$dollar-selector'],
+        answer: '$dollar-selector'
+      },
+      {
+        question: '3. HTML is considered as ___ language',
+        options: ['Programming Langauge', 'OOP Language', 'High Level Language', 'Markup Language'],
+        answer: 'Markup Language'
+      },
+      {
+        question: '4. Which one is the mandatory attribute of the <img> tag?',
+        options: ['SRC', 'HREF', 'ID', 'ALT'],
+        answer: 'SRC'
+      },
+      {
+        question: '5.Which of the following JavaScript can do?',
+        options: ['JavaScript can react to events', 'JavaScript can manipulate HTML elements', 'JavaScript can be use to validate data', 'All of the mentioned'],
+        answer: 'All of the mentioned'
+      },
+      {
+        question: '6.Which CSS property allow you set multiple list properties at once?',
+        options: ['List-Style-Type', 'List-Style', 'List-Style-Position', 'List-Style-Image'],
+        answer: 'List-Style'
+      },
+      {
+        question: '7.In JavaScript "===" operator defines what',
+        options: ['Non-identical', 'Is identical(is equal to and is of the different type)', 'Is identical(is equal to and is of the same type)', 'Is equal to'],
+        answer: 'Is identical(is equal to and is of the same type)'
+      },
+      {
+        question: '8.What does the Alpha value in RGBA represent?',
+        options: ['Opacity value for a color', 'The shade of a color', 'Both A and B', 'None of the above'],
+        answer: 'Opacity value for a color'
+      },
+      {
+        question: '9. _________ keyword is used to declare variables in javascript',
+        options: ['Var', 'Dim', 'String', 'None of the mentioned'],
+        answer: 'Var'
+      },
+      {
+        question: '10.What is the latest version of CSS available',
+        options: ['CSS2', 'CSS3', 'CSS3.1', 'CSS4'],
+        answer: 'CSS3'
+      },
+    ];
+
+    function buildQuiz() {
+      const output = [];
+      questions.forEach((question, index) => {
+        const options = [];
+        question.options.forEach((option) => {
+          options.push(
+            `<label>
+               <input type="radio" name="question${index}" value="${option}">
+               ${option}
+             </label>`
+          );
+        });
+
+        output.push(
+          `<div class="question">
+             <h2>${question.question}</h2>
+             ${options.join('')}
+           </div>`
+        );
+      });
+
+      quizContainer.innerHTML = output.join('');
+    }
+
+    function showResults() {
+      const answerContainers = quizContainer.querySelectorAll('.question');
+      let score = 0;
+
+      questions.forEach((question, index) => {
+        const answerContainer = answerContainers[index];
+        const selectedOption = answerContainer.querySelector(`input[name=question${index}]:checked`);
+        const userAnswer = selectedOption ? selectedOption.value : null;
+
+        if (userAnswer === question.answer) {
+          score++;
+          answerContainer.style.color = 'green';
+        } else {
+          answerContainer.style.color = 'red';
+        }
+      });
+
+      alert(`You scored ${score} out of ${questions.length}`);
+    }
+
+    submitButton.addEventListener('click', showResults);
+    buildQuiz();
+  </script>
+</body>
+</html>
